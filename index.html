@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&display=swap" rel="stylesheet">
+    <style>
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+        /* Light mode styles */
+        body.light-mode {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        /* Header styles */
+        .header {
+            padding: 10px 16px;
+            background: #555;
+            color: #f1f1f1;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .header h2 {
+            margin: 0;
+        }
+        /* Search bar styles */
+        .search-bar {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+        .search-bar input[type="text"] {
+            width: calc(100% - 100px);
+            padding: 8px;
+            border-radius: 5px 0 0 5px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .search-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        /* Search results styles */
+        .search-results {
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 0;
+            list-style: none;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .search-results li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .search-results li:last-child {
+            border-bottom: none;
+        }
+        /* Page content styles */
+        .content {
+            padding: 16px;
+            /* Add some top padding to prevent sudden movement */
+            padding-top: 102px;
+        }
+        /* Toggle button styles */
+        .toggle-button {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.className = body.className === "dark-mode" ? "light-mode" : "dark-mode";
+            localStorage.setItem("stateMode", body.className);
+        }
+
+        function search() {
+            const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+            // Perform your search logic here
+            // For demonstration, let's assume you have pages named page1.html, page2.html, etc.
+            const pages = ["page1.html", "page2.html", "page3.html", "anotherpage.html", "yetanotherpage.html"]; // Add your page names here
+            const searchResults = pages.filter(page => page.toLowerCase().includes(searchTerm)).slice(0, 3);
+            const searchResultsContainer = document.getElementById("searchResultsContainer");
+            searchResultsContainer.innerHTML = ""; // Clear previous results
+            if (searchResults.length > 0) {
+                searchResults.forEach(result => {
+                    const listItem = document.createElement("li");
+                    const link = document.createElement("a");
+                    link.href = result;
+                    link.textContent = result;
+                    listItem.appendChild(link);
+                    searchResultsContainer.appendChild(listItem);
+                });
+            } else {
+                const noResults = document.createElement("li");
+                noResults.textContent = "No matching pages found.";
+                searchResultsContainer.appendChild(noResults);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("searchInput").addEventListener("input", function(event) {
+                search();
+            });
+        });
+    </script>
+</head>
+<body class="light-mode">
+    <div class="header" id="myHeader">
+        <a href="index.html">
+            <h2>Alphapedia</h2>
+        </a>
+        <div class="search-bar">
+            <input id="searchInput" type="text" placeholder="Search...">
+            <button class="search-button" onclick="search()">Search</button>
+        </div>
+        <button class="toggle-button" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+    <div class="content">
+        <ul class="search-results" id="searchResultsContainer"></ul>
+       <!--site content-->
+    </div>
+</body>
+</html>
